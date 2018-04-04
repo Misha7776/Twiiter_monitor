@@ -1,0 +1,23 @@
+aside.card.col-md-4
+  .card-body
+    div
+      h1
+        = @twitter_user.name
+    .text-center
+      = image_tag  @twitter_user.image_url, alt: @twitter_user.name, size: 150
+    section.stats
+      p
+        | Description: 
+        = @twitter_user.description
+      p
+        | Created at: 
+        = @twitter_user.created_at_twitter.strftime("%m/%d/%Y")
+      p
+        | User owner id: 
+        = @twitter_user.owner
+      p
+        | Followers: 
+        = number_to_human(@twitter_user.followers)
+      p
+        | Following: 
+        = number_to_human(@twitter_user.following)

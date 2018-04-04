@@ -1,0 +1,31 @@
+h1
+  | List of users
+.text-align-center
+  table.table.table-bordered
+    thead
+      tr
+        th[scope="col"]
+          | Name
+        th[scope="col"]
+          | Owner
+        th[colspan="1"]
+          |  Operations
+    tbody
+      - @twitter_users.each do |user|
+        tr
+          td
+            = link_to user.name,  twitter_user_path(user)
+          td
+            = user.owner
+          td
+            .row.btn-group
+              .col-md-4
+                = link_to 'Show', user , class: 'btn btn-warning btn-sm'
+              .col-md-4
+                = link_to 'Edit', edit_twitter_user_path(user), class: 'btn btn-danger btn-sm'
+              .col-md-4
+                = link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' },
+                class: 'btn btn-primary btn-sm'
+              .col-md-2
+                = link_to 'Export', export_to_exel_twitter_users_path ,
+                                             class: 'btn btn-primary btn-sm'

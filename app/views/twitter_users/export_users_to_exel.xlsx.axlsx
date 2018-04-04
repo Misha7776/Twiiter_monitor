@@ -1,0 +1,8 @@
+wb = xlsx_package.workbook
+head = wb.styles.add_style(b: true, bg_color: '232328', border: { style: :thin, color: 'FF000000' })
+wb.add_worksheet(name: "Twitter Users") do |sheet|
+    sheet.add_row [ 'Name', 'Owner', 'Followers', 'Following', 'Description'], style: head
+  @twitter_users.each do |user|
+    sheet.add_row [user.name, user.owner, user.followers, user.following, user.description]
+  end
+end

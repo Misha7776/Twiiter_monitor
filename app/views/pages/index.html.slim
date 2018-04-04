@@ -1,0 +1,12 @@
+- if user_signed_in?
+  .row
+    = render 'side_bar'
+    = render 'twitter_users/tweets', tweets: @tweets_feed
+- else
+  .center.jumbotron
+    h1
+      | Welcome!
+    p
+      | Register to get started.
+    p
+      = link_to 'Register', new_user_registration_path, class: 'btn btn-primary btn-lg'

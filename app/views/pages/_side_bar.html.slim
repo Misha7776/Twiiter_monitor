@@ -1,0 +1,14 @@
+aside.card.col-md-4
+  .card-body
+    h1
+      = current_user.name
+    .text-center
+      =  image_tag gravatar_image_url(current_user.email, size: 150), alt: current_user.name
+    section.stats
+      p
+        | Created at: 
+        = current_user.created_at
+      p
+        | User email: 
+        = current_user.email
+      = link_to 'Users list', twitter_users_path, class: 'btn btn-warning btn-lg'
