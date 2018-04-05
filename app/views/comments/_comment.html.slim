@@ -1,0 +1,6 @@
+.comment-list[id="#{dom_id(comment)}"]
+  .row
+    .col-md-12
+      p = comment.body
+      p = link_to 'Delete', comment_path(comment.id), method: :delete, remote: true,
+                data: {confirm: 'Are you certain you want to delete this comment?'}

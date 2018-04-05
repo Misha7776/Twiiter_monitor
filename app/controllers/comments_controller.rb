@@ -1,31 +1,37 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_tweet, only: %i[create]
 
   def create
-    @comment = @tweet.comments.build(comment_params)
+    @comment = tweet_resource.comments.build(comment_params)
     respond_to do |format|
-    if @comment.save
-      format.html { redirect_to twitter_user_path(@tweet.twitter_user_id) }
-      format.js
-    else
-      render :new
-    end
+      if @comment.save
+        format.js
+      else
+        format.js { render(js: "alert('Comment is invalid!');") }
+      end
     end
   end
 
   def destroy
-    binding.pry
-    @comment = Comment.find(params[:id])
-    @comment.destroy
-    flash[:success] = 'Comments deleted'
-    redirect_to twitter_user_path(@tweet.twitter_user_id)
+    @comment = comment_resource
+    respond_to do |format|
+      if @comment.destroy
+        format.html { redirect_back fallback_location: root_path }
+        format.js
+      else
+        format.js { render(js: "alert('No rights to delete this comment');") }
+      end
+    end
   end
 
   private
 
-  def find_tweet
-    @tweet = Tweet.find(params[:comment][:tweet_id])
+  def comment_resource
+    Comment.find(params[:id])
+  end
+
+  def tweet_resource
+    Tweet.find(params[:comment][:tweet_id])
   end
 
   def comment_params

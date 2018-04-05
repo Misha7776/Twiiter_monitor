@@ -21,17 +21,6 @@
                 = number_to_human(tweet.favorite_count, precision: 2)
                 = link_to "#{tweet.uri}", target: '_blank' do
                   i.text-secondary.fa.fa-external-link.ml-1
-            #comments
-              - tweet.comments.each do |comment|
-                .row
-                  .col-md-12
-                    p = comment.body
-                    = link_to 'Delete', comment_path, method: :delete,
-                            data: {confirm: 'Are you certain you want to delete this comment?'},
-                            style: 'display: inline'
+            = render 'comments/comments', object: tweet
 
-            .comment-form
-              = form_for Comment.new, remote: true do |f|
-                = f.hidden_field :tweet_id, value: tweet.id
-                = f.text_field :body, id: 'body_input'
-                = f.submit
+

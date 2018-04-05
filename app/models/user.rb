@@ -2,7 +2,7 @@ class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_NAME_REGEX = /[a-zA-Z0-9]/
   before_save :capitalize_name, on: %i[create update]
-  after_save :send_email, on: :create
+  after_create :send_email
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
