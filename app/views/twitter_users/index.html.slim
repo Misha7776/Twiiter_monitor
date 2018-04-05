@@ -1,15 +1,19 @@
 h1
   | List of users
+.row.text-right
+  .col-md-12
+    = link_to  new_twitter_user_path, class: 'btn btn-success', id: 'add-button' do
+      i.fa.fa-plus
 .text-align-center
   table.table.table-bordered
     thead
       tr
-        th[scope="col"]
+        th.col-md-2
           | Name
-        th[scope="col"]
+        th.col-md-2
           | Owner
-        th[colspan="1"]
-          |  Operations
+        th.col-md-4
+          | Operations
     tbody
       - @twitter_users.each do |user|
         tr
@@ -19,13 +23,18 @@ h1
             = user.owner
           td
             .row.btn-group
-              .col-md-4
-                = link_to 'Show', user , class: 'btn btn-warning btn-sm'
-              .col-md-4
-                = link_to 'Edit', edit_twitter_user_path(user), class: 'btn btn-danger btn-sm'
-              .col-md-4
-                = link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' },
-                class: 'btn btn-primary btn-sm'
-              .col-md-2
-                = link_to 'Export', export_to_exel_twitter_users_path ,
-                                             class: 'btn btn-primary btn-sm'
+              .col-md-3
+                = link_to user , class: 'btn btn-warning btn-md' do
+                  i.fa.fa-eye
+              .col-md-3
+                = link_to edit_twitter_user_path(user), class: 'btn btn-danger btn-md' do
+                  i.fa.fa-edit
+              .col-md-3
+                = link_to user, method: :delete, data: { confirm: 'Are you sure?' },
+                class: 'btn btn-primary btn-md' do
+                  i.fa.fa-trash
+              /.col-md-3
+              /  = link_to export_to_exel_twitter_users_path ,
+              /                               class: 'btn btn-info btn-md' do
+              /    i.fa.fa-external-link
+              /      |  Export to Exel

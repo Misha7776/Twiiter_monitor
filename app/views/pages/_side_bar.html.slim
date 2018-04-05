@@ -5,10 +5,14 @@ aside.card.col-md-4
     .text-center
       =  image_tag gravatar_image_url(current_user.email, size: 150), alt: current_user.name
     section.stats
-      p
-        | Created at: 
-        = current_user.created_at
-      p
-        | User email: 
-        = current_user.email
-      = link_to 'Users list', twitter_users_path, class: 'btn btn-warning btn-lg'
+      h4
+        | Monitoring
+        = " #{pluralize(current_user.monitoring, 'user')}"
+      h4
+        | Your email:
+        = " #{current_user.email}"
+    .row
+      .col-md-4
+        = link_to 'New Twitter', new_twitter_user_path, class: 'btn btn-primary'
+      .col-md-6
+        = link_to 'Users list', twitter_users_path, class: 'btn btn-success '

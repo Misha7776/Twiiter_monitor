@@ -31,4 +31,8 @@ class User < ApplicationRecord
   def send_email
     UserMailer.registration(self).deliver
   end
+
+  def monitoring
+    twitter_users.count
+  end
 end

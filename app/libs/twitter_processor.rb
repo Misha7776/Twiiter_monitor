@@ -1,6 +1,6 @@
 class TwitterProcessor
-  def initialize(user:, number_of_tweets:)
-    @twitter_owner = user
+  def initialize(owner:, number_of_tweets:)
+    @twitter_owner = owner
     @count = number_of_tweets
     @client = initialize_twitter_client
     @user_id = user_id

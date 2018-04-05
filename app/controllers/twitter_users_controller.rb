@@ -1,6 +1,6 @@
 class TwitterUsersController < ApplicationController
   before_action :authenticate_user!
-  NUMBER_OF_TWEETS = 10
+
 
   def index
     @twitter_users = collection.popular_first
@@ -17,18 +17,11 @@ class TwitterUsersController < ApplicationController
 
   def create
     @twitter_user = current_user.twitter_users.build(user_params)
-    user_data = twitter_resource
-    tweets = user_data.tweets
-    @twitter_user.assign_attributes(followers:          user_data.followers,
-                                    following:          user_data.following,
-                                    image_url:          user_data.image_url,
-                                    created_at_twitter: user_data.created,
-                                    description:        user_data.description)
     if @twitter_user.save
-      twitter_user_posts(tweets, @twitter_user)
-      redirect_to @twitter_user, flash: { success: 'New user is successfuly added!' }
+      TwitterWorker.perform_async(user_params[:owner], @twitter_user.id)
+      redirect_to twitter_users_path, flash: { success: 'New user is successfuly added!' }
     else
-      flash[:danger] = 'Your new user has invalid data!'
+      flash[:danger].now = 'Your new user has invalid data!'
       render :new
     end
   end
@@ -75,18 +68,5 @@ class TwitterUsersController < ApplicationController
 
   def tweets_resource
     resource.tweets
-  end
-
-  def twitter_resource
-    TwitterProcessor.new(user: params[:twitter_user][:owner], number_of_tweets: NUMBER_OF_TWEETS)
-  end
-
-  def twitter_user_posts(tweets, user)
-    tweets.each do |tweet|
-      user.tweets.build(full_text: tweet.full_text,
-                        created: tweet.created_at,
-                        favorite_count: tweet.favorite_count,
-                        uri: tweet.uri).save!
-    end
   end
 end

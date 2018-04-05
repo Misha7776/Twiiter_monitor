@@ -1,6 +1,5 @@
 class PagesController < ApplicationController
 
-
   def index
     @tweets_feed = feed
   end
