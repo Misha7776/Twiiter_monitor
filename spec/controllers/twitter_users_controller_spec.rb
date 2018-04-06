@@ -55,7 +55,7 @@ RSpec.describe TwitterUsersController, type: :controller do
         post :create, params: { twitter_user: { name: val_twitter_user.name,
                                                 owner: val_twitter_user.owner } }
         expect(response).to have_http_status(302)
-        expect(response).to redirect_to TwitterUser.last
+        expect(response).to redirect_to twitter_users_path
         expect(controller).to set_flash[:success]
       end
     end
