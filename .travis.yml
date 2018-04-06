@@ -11,10 +11,12 @@ cache:
   bundler: true
 
 bundler_args: --jobs 3 --retry 3
-
-before_script:
-  - psql -c 'create database Twitter_monitor_test' -U postgres
+script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake db:test:prepare
+  - bundle exec rspec spec/
+before_script:
+  - psql -c 'create database Twitter_monitor_test;' -U postgres
 
 addons:
   apt:
