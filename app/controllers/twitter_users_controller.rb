@@ -21,7 +21,7 @@ class TwitterUsersController < ApplicationController
       TwitterWorker.perform_async(user_params[:owner], @twitter_user.id)
       redirect_to twitter_users_path, flash: { success: 'New user is successfuly added!' }
     else
-      flash[:danger].now = 'Your new user has invalid data!'
+      flash[:danger] = 'Your new user has invalid data!'
       render :new
     end
   end
