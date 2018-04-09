@@ -1,8 +1,10 @@
 language: ruby
 
 sudo: required
+
 services:
   - postgresql
+  - redis-server
 
 rvm:
   - "2.4.1"
@@ -14,6 +16,7 @@ bundler_args: --jobs 3 --retry 3
 
 before_script:
   - psql -c 'create database twitter_monitor_test;' -U postgres
+  - bundle exec sidekiq -d -L /tmp/sidekiq.log
 
 addons:
   apt:
