@@ -4,17 +4,18 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
+
 gem 'devise'
+gem 'rails', '~> 5.1.5'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.7'
-gem 'rails', '~> 5.1.5'
 gem 'rails_autolink'
 gem 'turbolinks', '~> 5'
 gem 'twitter'
-gem 'jbuilder', '~> 2.5'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-turbolinks'
+gem 'jbuilder', '~> 2.5'
 gem 'slim'
 gem 'sendgrid-ruby'
 gem 'html2slim'
@@ -35,7 +36,9 @@ gem 'sprockets-rails', require: 'sprockets/railtie'
 gem 'will_paginate'
 gem 'gravatar_image_tag'
 
-
+gem "trailblazer-rails"
+gem "reform"
+gem "reform-rails"
 
 group :development, :test do
   gem 'annotate'

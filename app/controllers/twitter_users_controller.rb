@@ -1,28 +1,27 @@
 class TwitterUsersController < ApplicationController
   before_action :authenticate_user!
 
-
   def index
-    @twitter_users = collection.popular_first
+    @twitter_users = TwitterUser::Index.call(current_user: current_user)['model']
   end
 
   def show
-    @twitter_user = resource
-    @tweets = tweets_resource
+    result = TwitterUser::Show.call(params: params.permit(:id), current_user: current_user)
+    @twitter_user = result['user']
+    @tweets = result['tweets']
   end
 
   def new
-    @twitter_user = current_user.twitter_users.build
+    @twitter_user = TwitterUser::New.call(current_user: current_user)['model']
   end
 
   def create
-    @twitter_user = current_user.twitter_users.build(user_params)
-    if @twitter_user.save
-      TwitterWorker.perform_async(user_params[:owner], @twitter_user.id)
+    binding.pry
+    result = TwitterUser::Create.call(params: user_params, current_user: current_user)
+    if result.success?
       redirect_to twitter_users_path, flash: { success: 'New user is successfuly added!' }
     else
-      flash[:danger] = 'Your new user has invalid data!'
-      render :new
+      redirect_to new_twitter_user_path, flash: { danger: 'Your new user has invalid data!'}
     end
   end
 
