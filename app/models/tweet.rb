@@ -1,6 +1,6 @@
 class Tweet < ApplicationRecord
   belongs_to :twitter_user
-  has_many :comments
+  has_many :comments, dependent: :destroy
   # validates_presence_of %i[full_text created]
   # validates_each %i[retweet_count favorite_count], allow_nil: true
 

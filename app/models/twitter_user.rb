@@ -7,8 +7,8 @@ class TwitterUser < ApplicationRecord
   belongs_to :user
   has_many :tweets, dependent: :destroy
 
-  # validates :owner, presence: true
-  # validates :name, uniqueness: true, presence: true
+  validates :owner, presence: true
+  validates :name, uniqueness: true, presence: true
 
   validates :uid, presence: false, allow_nil: true
   validate :monitored, on: :create

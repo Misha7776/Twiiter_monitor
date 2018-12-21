@@ -1,24 +1,15 @@
 class TwitterUser < ApplicationRecord
   class Create < Trailblazer::Operation
-    binding.pry
-    extend Contract::DSL
-
-    contract do
-      property :name
-      property :owner
-
-      # validates :name, uniqueness: true, presence: true
-      validates :owner, presence: true
-    end
-
     step :build_user
-    # step Contract::Build(constant: TwitterUser::Contract::Create)
-    # step Contract::Validate(key: 'twitter_user')
-    # step Contract::Persist()
+    step :save_user
     step :start_woker
 
     def build_user(options, params:, current_user:, **)
       options['model'] = current_user.twitter_users.build(params)
+    end
+
+    def save_user(options, **)
+      options['model'].save if options['model'].validate
     end
 
     def start_woker(options, **)
