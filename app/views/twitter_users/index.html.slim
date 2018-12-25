@@ -8,12 +8,14 @@ h1
   table.table.table-bordered
     thead
       tr
-        th.col-md-2
+        th.col-md-3
           | Name
-        th.col-md-2
+        th.col-md-3
           | Owner
-        th.col-md-4
+        th.col-md-3
           | Operations
+        th.col-md-3
+          | Status
     tbody
       - @twitter_users.each do |user|
         tr
@@ -33,8 +35,11 @@ h1
                 = link_to user, method: :delete, data: { confirm: 'Are you sure?' },
                 class: 'btn btn-primary btn-md' do
                   i.fa.fa-trash
-              /.col-md-3
-              /  = link_to export_to_exel_twitter_users_path ,
-              /                               class: 'btn btn-info btn-md' do
-              /    i.fa.fa-external-link
-              /      |  Export to Exel
+          td        
+            .col-md-6
+              p id="notifications-#{user.id}"
+                - if job_status(user.job_id)
+                  | Completed
+                - else 
+                  | Pending
+

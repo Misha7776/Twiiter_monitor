@@ -9,7 +9,7 @@
           .card-body
             p.mb-2
               = auto_link(tweet.full_text, html: {target: '_blank'})
-            .tweet-footer.card-footer.border-0.text-muted.mt-2
+            .tweet-footer.card-footer.border-0.text-muted
               span
                 = "posted #{time_ago_in_words(tweet.created)} ago "
               span.float-right

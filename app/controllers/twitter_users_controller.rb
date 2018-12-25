@@ -16,7 +16,7 @@ class TwitterUsersController < ApplicationController
   end
 
   def create
-    result = TwitterUser::Create.call(params: user_params, current_user: current_user)
+    result = TwitterUser::Create.(params: params, current_user: current_user)
     if result.success?
       redirect_to twitter_users_path, flash: { success: 'New user is successfuly added!' }
     else
@@ -30,7 +30,7 @@ class TwitterUsersController < ApplicationController
   end
 
   def update
-    result = TwitterUser::Update.call( params: user_params.merge(params.permit(:id)) )
+    result = TwitterUser::Update.call( params: params)
     @twitter_user = result[:model]
     if result.success?
       redirect_to @twitter_user, flash: { success: 'Profile updated' }
@@ -42,16 +42,5 @@ class TwitterUsersController < ApplicationController
   def destroy
     TwitterUser::Destroy.call( params: params.permit(:id) )
     redirect_to twitter_users_path, flash: { success: 'User deleted' }
-  end
-
-  def export_to_exel
-    @twitter_users = TwitterUser.all
-    render xlsx: "export_users_to_exel.xlsx.axlsx", filename: "twitter_users.xlsx"
-  end
-
-  private
-
-  def user_params
-    params.require(:twitter_user).permit(:name, :owner)
   end
 end

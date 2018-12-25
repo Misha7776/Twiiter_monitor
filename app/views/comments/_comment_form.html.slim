@@ -1,5 +1,5 @@
 .comment-form
   = form_for Comment.new, remote: true do |f|
     = f.hidden_field :tweet_id, value: tweet_id
-    = f.text_field :body, id: 'body_input'
+    = f.text_field :body, id: "body_input-#{tweet_id}"
     = f.submit

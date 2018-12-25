@@ -1,4 +1,4 @@
-#comments
+div.comments data-tweet-id="#{object.id}"
   = render partial: 'comments/comment', collection: object.comments, as: :comment
 .comment-form
   = render 'comments/comment_form', tweet_id: object.id

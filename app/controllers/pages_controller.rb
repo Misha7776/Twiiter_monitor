@@ -1,16 +1,6 @@
 class PagesController < ApplicationController
-
   def index
-    @tweets_feed = feed
-  end
-
-  private
-
-  def feed
-    Tweet.where('twitter_user_id IN (:ids)', ids: user_ids_list).recent_ones
-  end
-
-  def user_ids_list
-    current_user.twitter_users.ids if user_signed_in?
+    result = Page::Index.(params: params, current_user: current_user, signed_in: user_signed_in?)
+    @tweets_feed = result[:tweets]
   end
 end

@@ -20,9 +20,12 @@ gem 'slim'
 gem 'sendgrid-ruby'
 gem 'html2slim'
 gem 'rubyzip', '>= 1.2.1'
+
 gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c8ac844'
 gem 'axlsx_rails'
+
 gem 'sidekiq'
+gem 'sidekiq-status'
 
 # Use SCSS for stylesheets
 gem 'bootstrap-sass'

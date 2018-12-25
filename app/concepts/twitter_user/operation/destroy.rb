@@ -1,10 +1,10 @@
 class TwitterUser < ApplicationRecord
   class Destroy < Trailblazer::Operation
     step Model( TwitterUser, :find_by )
-    step :delete_user
+    step :delete!
 
-    def delete_user(options, params:, **)
-    	options[:model].destroy
+    def delete!(options, model:, **)
+    	model.destroy
     end
   end
 end
